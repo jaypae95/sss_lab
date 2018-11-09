@@ -1,0 +1,76 @@
+=========================History=========================
+
+
+=========================Verses John(1)=========================
+[You : Rock] [Computer : Rock]
+Draw!
+=========================Verses John(1)=========================
+[You : Paper] [Computer : Paper]
+Draw!
+=========================Verses John(1)=========================
+[You : Paper] [Computer : Paper]
+Draw!
+=========================Verses John(1)=========================
+[You : Rock] [Computer : Rock]
+Draw!
+=========================Verses John(1)=========================
+[You : Scissors] [Computer : Rock]
+Lose!
+=========================Verses John(1)=========================
+[You : Rock] [Computer : Rock]
+Draw!
+=========================Verses John(1)=========================
+[You : Paper] [Computer : Scissors]
+Lose!
+=========================Verses John(1)=========================
+[You : Scissors] [Computer : Paper]
+Win!
+=========================Verses Jack(2)=========================
+[You : Scissors] [Computer : Scissors]
+Draw!
+=========================Verses Jack(2)=========================
+[You : Rock] [Computer : Scissors]
+Win!
+=========================Verses Jay(3)=========================
+[You : Rock] [Computer : Paper]
+Lose!
+=========================Verses Jack(2)=========================
+[You : Paper] [Computer : Paper]
+Draw!
+=========================Verses Jack(2)=========================
+[You : Scissors] [Computer : Paper]
+Win!
+=========================Verses Jay(3)=========================
+[You : Rock] [Computer : Paper]
+Lose!
+=========================Verses Jack(2)=========================
+[You : Paper] [Computer : Scissors]
+Lose!
+=========================Verses John(1)=========================
+[You : Scissors] [Computer : Paper]
+Win!
+=========================Verses Jack(2)=========================
+[You : Rock] [Computer : Rock]
+Draw!
+=========================Verses Jack(2)=========================
+[You : Paper] [Computer : Scissors]
+Lose!
+=========================Verses John(1)=========================
+[You : Scissors] [Computer : Scissors]
+Draw!
+=========================Verses John(1)=========================
+[You : Rock] [Computer : Scissors]
+Win!
+=========================Verses Jack(2)=========================
+[You : Rock] [Computer : Scissors]
+Win!
+=========================Verses Jay(3)=========================
+[You : Rock] [Computer : Scissors]
+Win!
+
+
+**You played 22 games and finally won the game!!**
+End program.
+
+
+=========================History Done=========================

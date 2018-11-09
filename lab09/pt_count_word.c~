@@ -1,0 +1,161 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include <sys/time.h>
+
+int fd;
+FILE *fp;
+char *arr;
+void parse();
+void *count(void *);
+int num=0, wasspace=0, totalnum = 0, off = 0;
+int word[1024] = {0};
+pthread_mutex_t sync_mutex;
+pthread_barrier_t b;
+
+int main() {
+		struct timeval start, end;
+		long long startusec, endusec;
+		double elapsed;
+		gettimeofday(&start, NULL);
+
+		pthread_t tid[8];
+		pthread_mutex_init(&sync_mutex, NULL);
+		arr = (char*)malloc(sizeof(char)*20);
+		int i;
+		if((fd = open("./long.txt", O_RDONLY))<0) {
+				printf("fail to open \"./long.txt\"\n");
+				return 0;
+		}
+		fp = fopen("./tmp.txt", "w+");
+		parse();
+		fclose(fp);
+		off /=  8;
+		totalnum /= 8;
+		fp = fopen("./word.txt", "w+");
+
+		pthread_barrier_init(&b, NULL, 9);
+		for(i=0; i<8; i++) {
+				if(pthread_create(&tid[i], NULL, count, (void*)i) != 0) {
+						printf("fail to create thread\n");
+						return 0;
+				}
+		}
+		pthread_barrier_wait(&b);
+
+		char *buf = (char*)malloc(sizeof(char)*20);
+		fseek(fp, 0, SEEK_SET);
+		for(i = 0; i<num; i++) {
+				fgets(buf, 20, fp);
+				buf[strlen(buf)-1] = '\0';
+				printf("%s : ", buf);
+				printf("%d\n", word[i]);
+		}
+		fclose(fp);
+
+		gettimeofday(&end, NULL);
+		startusec = start.tv_sec * 1000000 + start.tv_usec;
+		endusec = end.tv_sec * 1000000 + end.tv_usec;
+		elapsed = (double)(endusec - startusec) / 1000000.0;
+		printf("time : %.4fseconds\n", elapsed );
+}
+
+void *count(void *i) {
+		FILE *fp2;
+		char alph;
+		char *buf = (char*)malloc(sizeof(char)*20);
+		char *infile = (char*)malloc(sizeof(char)*20);
+		int till, fpoff;
+		int pos=-1, isinfile = 0, readonemore=0, first=1;
+
+		fpoff = off*(int)i;
+		fp2 = fopen("./tmp.txt", "r");
+		fseek(fp2, fpoff, SEEK_SET);
+		if(((int)i) != 0) {
+	 		while(1) {
+					fread(&alph, sizeof(char), 1, fp2);
+					if(alph == '\n'){
+							break;
+					}
+					first=0;
+					fseek(fp2, -2, SEEK_CUR);
+			}
+		}
+		int j;
+		till = totalnum;
+		for(j = 0; j<till+7; j++) {
+				if(fgets(buf, 20, fp2) == 0) {
+						break;
+				}
+				buf[strlen(buf)-1] = '\0';
+				pthread_mutex_lock(&sync_mutex);
+				fseek(fp, 0, SEEK_SET);
+				while(fgets(infile, 20, fp) != 0) {
+						pos++;
+						infile[strlen(infile)-1] = '\0';
+						if(!strcmp(infile, buf)) {
+								isinfile = 1;
+								memset(infile, 0, strlen(infile));
+								break;
+						}
+						memset(infile, 0, strlen(infile));
+				}
+				if(isinfile==0) {
+						fseek(fp, 0, SEEK_END);
+						fprintf(fp, "%s\n", buf);
+						word[num]++;
+						num++;
+						pthread_mutex_unlock(&sync_mutex);
+						pos = -1;
+						memset(buf, 0, strlen(buf));
+				}
+				else {
+						word[pos]++;
+						pos = -1;
+						pthread_mutex_unlock(&sync_mutex);
+						memset(buf, 0, strlen(buf));
+						isinfile = 0;
+				}
+		}
+		pthread_barrier_wait(&b);
+}
+
+void parse() {
+		char* infile = (char*)malloc(sizeof(char)*20);
+		int res;
+		char alph;
+		int index=0;
+		while(1) {
+				if((res = read(fd, &alph, 1)==0)) {
+						break;
+				}
+				if(res < 0) {
+						return;
+				}
+				if(alph == ' ' || alph == '\n') {
+						if(wasspace == 1) {
+								continue;
+						}
+						fseek(fp, 0, SEEK_SET);
+								arr[index] = '\0';
+								fseek(fp, 0, SEEK_END);
+								fprintf(fp, "%s\n", arr);
+								totalnum++;
+								index=0;
+								wasspace = 1;
+								memset(arr, 0, strlen(arr));						
+				}
+				else if(isalpha((int)alph) || alph == '-' || alph == '\'') {
+						if(isupper((int)alph)) {
+								alph += 32;
+						}
+								arr[index++] = alph;
+								wasspace = 0;
+				}
+		}
+		fseek(fp, 0, SEEK_END);
+		off = ftell(fp);
+	return;
+}

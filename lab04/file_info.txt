@@ -1,0 +1,50 @@
+/etc/pam.d/passwd : regular
+File Permission : rw-r--r--
+i-node number : 1180047 
+Number of hard link : 1 
+User ID : 0 
+Group ID : 0 
+Total Size : 146 
+Block Size : 4096 
+Number of blocks : 8 
+
+/etc/passwd : regular
+File Permission : rw-r--r--
+i-node number : 1185596 
+Number of hard link : 1 
+User ID : 0 
+Group ID : 0 
+Total Size : 1441 
+Block Size : 4096 
+Number of blocks : 8 
+
+/selinux/class/passwd : directorty
+File Permission : r-xr-xr-x
+i-node number : 67111662 
+Number of hard link : 3 
+User ID : 0 
+Group ID : 0 
+Total Size : 0 
+Block Size : 4096 
+Number of blocks : 0 
+
+/selinux/class/passwd/perms/passwd : regular
+File Permission : r--r--r--
+i-node number : 67109855 
+Number of hard link : 1 
+User ID : 0 
+Group ID : 0 
+Total Size : 0 
+Block Size : 4096 
+Number of blocks : 0 
+
+/usr/bin/passwd : regular
+File Permission : rwSr-xr-x
+i-node number : 141496 
+Number of hard link : 1 
+User ID : 0 
+Group ID : 0 
+Total Size : 25980 
+Block Size : 4096 
+Number of blocks : 56 
+

@@ -1,0 +1,5 @@
+/etc/pam.d/passwd
+/etc/passwd
+/selinux/class/passwd
+/selinux/class/passwd/perms/passwd
+/usr/bin/passwd
