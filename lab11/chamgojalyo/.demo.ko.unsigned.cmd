@@ -1,1 +1,0 @@
-cmd_/home/jaypae95/sss_lab/lab11/chamgojalyo/demo.ko.unsigned := ld -r -m elf_i386 -T /usr/src/kernels/2.6.32-642.el6.i686/scripts/module-common.lds --build-id -o /home/jaypae95/sss_lab/lab11/chamgojalyo/demo.ko.unsigned /home/jaypae95/sss_lab/lab11/chamgojalyo/demo.o /home/jaypae95/sss_lab/lab11/chamgojalyo/demo.mod.o 
